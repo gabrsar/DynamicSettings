@@ -1,0 +1,5 @@
+.g8/
+.idea/
+project/
+target/
+logs/
