@@ -1,4 +1,4 @@
-package br.com.gabriel.saraiva.dynamicsettings.dynamicsettings;
+package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
 import com.sun.istack.internal.NotNull;
 import java.util.Optional;

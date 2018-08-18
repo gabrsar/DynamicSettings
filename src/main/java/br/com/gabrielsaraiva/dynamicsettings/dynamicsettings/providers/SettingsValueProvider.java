@@ -1,6 +1,6 @@
-package br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.providers;
+package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers;
 
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.Setting;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
 import java.util.Optional;
 
 public interface SettingsValueProvider {

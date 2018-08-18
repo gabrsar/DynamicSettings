@@ -1,4 +1,4 @@
-package br.com.gabriel.saraiva.dynamicsettings.dynamicsettings;
+package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;

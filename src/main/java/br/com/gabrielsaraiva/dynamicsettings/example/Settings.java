@@ -1,8 +1,8 @@
-package br.com.gabriel.saraiva.dynamicsettings.example;
+package br.com.gabrielsaraiva.dynamicsettings.example;
 
-import static br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.Setting.setting;
+import static br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting.setting;
 
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.Setting;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
 
 public class Settings {
 

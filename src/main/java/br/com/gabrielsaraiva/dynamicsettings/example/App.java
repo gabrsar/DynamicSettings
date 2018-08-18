@@ -1,8 +1,7 @@
-package br.com.gabriel.saraiva.dynamicsettings.example;
+package br.com.gabrielsaraiva.dynamicsettings.example;
 
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.SettingsService;
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.providers.dynamodb.DynamodbProvider;
-import br.com.gabriel.saraiva.dynamicsettings.example.Settings.Home;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.SettingsService;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dynamodb.DynamodbProvider;
 
 public class App {
 
@@ -16,7 +15,7 @@ public class App {
         System.out.println("It will take a while to syncronize, so... be patient ;)");
 
         while (true) {
-            System.out.println(Home.address.getValue());
+            System.out.println(Settings.Home.address.getValue());
             Thread.sleep(1000);
         }
 

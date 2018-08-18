@@ -1,7 +1,7 @@
-package br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.providers.dynamodb;
+package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dynamodb;
 
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.Setting;
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;

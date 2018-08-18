@@ -1,6 +1,6 @@
-package br.com.gabriel.saraiva.dynamicsettings.dynamicsettings;
+package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
-import br.com.gabriel.saraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
 
 public interface SettingsLoader {
 

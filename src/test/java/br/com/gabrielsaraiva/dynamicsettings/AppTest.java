@@ -1,4 +1,4 @@
-package br.com.gabriel.saraiva.dynamicsettings;
+package br.com.gabrielsaraiva.dynamicsettings;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
