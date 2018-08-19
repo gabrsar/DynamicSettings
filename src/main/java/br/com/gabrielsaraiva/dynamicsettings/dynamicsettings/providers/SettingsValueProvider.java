@@ -11,5 +11,7 @@ public interface SettingsValueProvider {
 
     boolean accept(Class<?> type);
 
+    public void assertSupportedType(Setting<?> s) throws NotSupportedTypeException;
+
 
 }

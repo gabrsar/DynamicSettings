@@ -1,6 +1,6 @@
 package br.com.gabrielsaraiva.dynamicsettings.example;
 
-import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.SettingsService;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.DynamicSettings;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dynamodb.DynamodbProvider;
 
 public class App {
@@ -8,7 +8,7 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
 
         DynamodbProvider dynamodbProvider = new DynamodbProvider("MySettings");
-        SettingsService ss = new SettingsService(dynamodbProvider, Settings.class);
+        DynamicSettings ss = new DynamicSettings(dynamodbProvider, Settings.class);
         ss.start();
 
         System.out.println("Go in dynamo and change with the value of this setting. Check what happen here :)");

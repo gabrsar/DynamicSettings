@@ -1,6 +1,7 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dynamodb;
 
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.NotSupportedTypeException;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -46,6 +47,13 @@ public class DynamodbProvider implements SettingsValueProvider {
         modulesByName = modules.entrySet()
             .stream()
             .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
+
+    }
+
+    public void assertSupportedType(Setting<?> s) throws NotSupportedTypeException {
+        if (!typeConverterMap.containsKey(s.getType())) {
+            throw new NotSupportedTypeException(this, s);
+        }
 
     }
 

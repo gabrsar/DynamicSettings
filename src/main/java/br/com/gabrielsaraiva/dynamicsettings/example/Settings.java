@@ -2,14 +2,16 @@ package br.com.gabrielsaraiva.dynamicsettings.example;
 
 import static br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting.setting;
 
+import br.com.gabrielsaraiva.dynamicsettings.Module;
+import br.com.gabrielsaraiva.dynamicsettings.ModulesHolder;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
 
-public class Settings {
+public class Settings extends ModulesHolder {
 
     // Create your Settings classes, or name them as you want.
 
     // They will be represented in Dynamo as new "documents", this one will be a record with module="Home"
-    public static class Home {
+    public static class Home extends Module {
 
         // This will help you avoid typos and avoid repeating yourself every new setting.
         private static final String home = "Home";
@@ -22,7 +24,7 @@ public class Settings {
 
     }
 
-    public static class School {
+    public static class School extends Module{
 
         private static final String school = "School";
         public static final Setting<String> address = setting(school, "name", "Some good school to study University");
