@@ -1,6 +1,6 @@
 # DynamicSettings
 
-[![Build Status](https://travis-ci.org/gabrsar/DynamicSettings.svg?branch=master)](https://travis-ci.org/gabrsar/DynamicSettings) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e16b2830fb9d4ecc9e0ec450d36b0a93)](https://www.codacy.com/app/gabriel-saraiva/DynamicSettings?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gabrsar/DynamicSettings&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/gabrsar/DynamicSettings.svg?branch=master)](https://travis-ci.org/gabrsar/DynamicSettings) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e16b2830fb9d4ecc9e0ec450d36b0a93)](https://www.codacy.com/app/gabriel-saraiva/DynamicSettings?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gabrsar/DynamicSettings&amp;utm_campaign=Badge_Grade) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Don't make deploys to change simple settings.
 
