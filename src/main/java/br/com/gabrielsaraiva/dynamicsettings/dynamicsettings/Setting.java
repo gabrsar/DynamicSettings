@@ -1,6 +1,5 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
-import com.sun.istack.internal.NotNull;
 import java.util.Optional;
 
 public class Setting<T> {
@@ -12,13 +11,13 @@ public class Setting<T> {
 
     // Maybe check if still using a birth value?
 
-    private Setting(@NotNull String name, @NotNull T fallbackValue) {
+    private Setting(String name, T fallbackValue) {
         this.name = name;
         this.fallBackValue = fallbackValue;
         this.currentValue = fallbackValue;
     }
 
-    public static <A> Setting<A> define(@NotNull String name, @NotNull A fallbackValue) {
+    public static <A> Setting<A> define(String name, A fallbackValue) {
         return new Setting<>(name, fallbackValue);
     }
 

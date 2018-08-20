@@ -8,7 +8,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
-import com.sun.istack.internal.NotNull;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +25,11 @@ public class DynamoDBProvider implements SettingsValueProvider {
 
     private final AmazonDynamoDB dynamoClient;
 
-    public DynamoDBProvider(@NotNull String tableName) {
+    public DynamoDBProvider(String tableName) {
         this(AmazonDynamoDBClientBuilder.defaultClient(), tableName);
     }
 
-    public DynamoDBProvider(@NotNull AmazonDynamoDB dynamoDB, @NotNull String tableName) {
+    public DynamoDBProvider(AmazonDynamoDB dynamoDB, String tableName) {
         this.tableName = tableName;
         this.dynamoClient = dynamoDB;
     }
