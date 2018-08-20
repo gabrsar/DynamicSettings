@@ -6,7 +6,7 @@ Don't make deploys to change simple settings.
 
 Simply put your settings on a database (only supports DynamoDB for now) and get it updated every minute.
 
-For examples on how to use, please check this [Simple example application](https://github.com/gabrsar/DynamicSettingsExample)
+For examples on how to use, please check this [Simple example application](https://github.com/gabrsar/DynamicSettingsExample) [WIP]
 
 # Features
 - [X] Support basic types
