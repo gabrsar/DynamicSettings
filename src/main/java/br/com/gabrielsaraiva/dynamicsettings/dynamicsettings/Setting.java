@@ -5,22 +5,25 @@ import java.util.Optional;
 
 public class Setting<T> {
 
-    private final String moduleName;
     private final String name;
     private final T fallBackValue;
+    private String moduleName;
     private T currentValue;
 
     // Maybe check if still using a birth value?
 
-    private Setting(@NotNull String pk, @NotNull String name, @NotNull T fallbackValue) {
-        this.moduleName = pk;
+    private Setting(@NotNull String name, @NotNull T fallbackValue) {
         this.name = name;
         this.fallBackValue = fallbackValue;
         this.currentValue = fallbackValue;
     }
 
-    public static <A> Setting<A> setting(@NotNull String moduleName, @NotNull String name, @NotNull A fallbackValue) {
-        return new Setting<>(moduleName, name, fallbackValue);
+    public static <A> Setting<A> define(@NotNull String name, @NotNull A fallbackValue) {
+        return new Setting<>(name, fallbackValue);
+    }
+
+    void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 
     public T getValue() {

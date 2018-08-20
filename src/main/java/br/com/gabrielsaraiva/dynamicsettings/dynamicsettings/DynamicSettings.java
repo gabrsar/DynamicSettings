@@ -5,6 +5,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.NotSupportedTypeException;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -17,57 +18,43 @@ import org.slf4j.LoggerFactory;
 
 public class DynamicSettings {
 
-    private static class Settings {
-
-        private static class SelfSettings {
-
-            private static final String self = DynamicSettings.class.getSimpleName();
-            public static final Setting<Integer> refreshInterval = Setting.setting(self, "refreshInterval", 60);
-            public static final Setting<Boolean> logs = Setting.setting(self, "logs", true);
-
-        }
-
-    }
-
     private static final Logger logger = LoggerFactory.getLogger(DynamicSettings.class);
-    private static final ScheduledExecutorService refresher = Executors.newSingleThreadScheduledExecutor();
 
     private static boolean settingsRegistered = false;
     private static boolean initialized = false;
 
     private static final Set<Setting<?>> settings = new HashSet<>();
 
+    private final ScheduledExecutorService refresher;
+    private final int refreshIntervalInSeconds;
     private final SettingsValueProvider provider;
 
-    public DynamicSettings(SettingsValueProvider provider, Class sourceClass, Class... sourceClasses) {
+    public DynamicSettings(SettingsValueProvider provider, int refreshIntervalInSeconds, Class sourceClass,
+        Class... sourceClasses) {
         this.provider = provider;
+        this.refreshIntervalInSeconds = refreshIntervalInSeconds;
+        this.refresher = Executors.newSingleThreadScheduledExecutor();
 
-        List<Class> sources = Arrays.asList(sourceClasses);
+        List<Class> sources = new ArrayList<>(1 + sourceClasses.length);
         sources.add(sourceClass);
-
-    }
-
-    private void rigister(List<Class> sources) {
+        sources.addAll(Arrays.asList(sourceClasses));
 
         sources.forEach(this::registerSettings);
 
-        String selfSettingsModuleName = DynamicSettings.class.getSimpleName();
-
-        boolean selfSettingsAlreadyDefinedByUser = settings.stream()
-            .anyMatch(s -> selfSettingsModuleName.equals(s.getModuleName()));
-
-        if (!selfSettingsAlreadyDefinedByUser) {
-            registerSettings(Settings.class);
-        }
-
     }
 
-    /**
-     * You can use this method in a controller or something else to externally force this to happen
-     */
     private void refreshAll() {
-        provider.loadAll();
-        settings.forEach(s -> updateSettingValue(s, provider.getSettingValue(s)));
+        boolean success;
+        try {
+            provider.loadAll();
+            settings.forEach(s -> updateSettingValue(s, provider.getSettingValue(s)));
+            success = true;
+        } catch (Exception e) {
+            logger.error("could not refresh all settings.", e);
+            success = false;
+        }
+
+        logger.info("Settings refresh done, success={}, next refresh in={} seconds", success, refreshIntervalInSeconds);
     }
 
     private void registerSettings(Class<?> clazz) {
@@ -102,7 +89,7 @@ public class DynamicSettings {
 
         logger.debug("starting with {} settings registred", settings.size());
         initialized = true;
-        refresher.scheduleWithFixedDelay(this::refreshAll, 5, 5, SECONDS);
+        refresher.scheduleWithFixedDelay(this::refreshAll, refreshIntervalInSeconds, refreshIntervalInSeconds, SECONDS);
     }
 
 
@@ -131,9 +118,13 @@ public class DynamicSettings {
 
         logger.debug("Loading settings from '{}'", module.getCanonicalName());
 
+        String moduleName = module.getSimpleName();
+
         for (Field field : module.getFields()) {
             try {
                 Setting<?> setting = (Setting<?>) field.get(Setting.class);
+
+                setting.setModuleName(moduleName);
 
                 registerSetting(setting);
                 logger.debug(
