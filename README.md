@@ -12,9 +12,13 @@ For examples on how to use, please check this [Simple example application](https
 - [X] Support basic types
 - [X] Support DynamoDB 
 - [X] Support Dummy Provider for Testing
+- [X] Full test coverage
 - [ ] Support collections and maps
+- [ ] Extract dependencies into separated modules
+- [ ] Support for Redis
 - [ ] Support MySql
 - [ ] Support PostgreSql
-- [X] Full test coverage
+- [ ] Support for MongoDB
+
 
 Suggestions and PullRequests are wellcome.
