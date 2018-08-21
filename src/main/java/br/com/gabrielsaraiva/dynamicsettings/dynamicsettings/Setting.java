@@ -21,7 +21,7 @@ public class Setting<T> {
         return new Setting<>(name, fallbackValue);
     }
 
-    void setModuleName(String moduleName) {
+    protected void setModuleName(String moduleName) {
 
         if (this.moduleName != null) {
             throw new RegisterSettingException("module name already defined");

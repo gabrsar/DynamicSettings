@@ -87,11 +87,11 @@ public class DynamicSettings {
     public void start() {
 
         if (!settingsRegistered) {
-            throw new RuntimeException("could not start due error on settings' registry.");
+            throw new RegisterSettingException("could not start due error on settings' registry.");
         }
 
         if (initialized) {
-            throw new RuntimeException("already stated.");
+            throw new RegisterSettingException("already stated.");
         }
 
         refreshAll();

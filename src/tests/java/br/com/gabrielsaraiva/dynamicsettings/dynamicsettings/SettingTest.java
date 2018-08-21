@@ -17,30 +17,30 @@ class SettingTest {
     }
 
     @Test
-    void missingNewValuesDontReplaceFallback() {
+    void assertThatMissingNewValuesDontReplaceFallback() {
         stringSetting.updateValue(Optional.empty());
         Assertions.assertEquals(defaultValue, stringSetting.getValue());
     }
 
     @Test
-    void newValuesReplaceFallback() {
+    void assertThatNewValuesReplaceFallback() {
         String newValue = "Awesome house, with, 5 dogs and a big garden";
         stringSetting.updateValue(Optional.of(newValue));
         Assertions.assertEquals(newValue, stringSetting.getValue());
     }
 
     @Test
-    void getTypeReallyReturnsBirthType() {
+    void assertThatGetTypeReallyReturnsBirthType() {
         Assertions.assertEquals(String.class, stringSetting.getType());
     }
 
     @Test
-    void throwsExceptionForNotDefinedModuleNames() {
+    void failIfNotDefineModuleNames() {
         Assertions.assertThrows(RegisterSettingException.class, () -> stringSetting.getModuleName());
     }
 
     @Test
-    void allowDefinitionOfModuleNameOnlyOnce() {
+    void failIfDefinitionOfModuleNameTwice() {
 
         String moduleName = "PreciousModule";
         stringSetting.setModuleName(moduleName);

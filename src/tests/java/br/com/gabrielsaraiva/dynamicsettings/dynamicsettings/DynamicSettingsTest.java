@@ -28,12 +28,12 @@ class DynamicSettingsTest {
     }
 
     @Test
-    void makeSureThatSettingsAreCorrectlyRegistered() {
+    void assertThatSettingsAreCorrectlyRegistered() {
         Assertions.assertEquals(Module.class.getSimpleName(), Module.stringSetting.getModuleName());
     }
 
     @Test
-    void throwsExceptionIfAssignSameSettingsToSecondDynamicSettings() {
+    void failsIfAssignSameSettingsToSecondDynamicSettings() {
 
         DummyProvider dp2 = new DummyProvider();
         Assertions.assertThrows(
@@ -43,7 +43,7 @@ class DynamicSettingsTest {
     }
 
     @Test
-    void refuseToRegisterUnsuportedSettingTypeByProvider() {
+    void failsIfRegisterUnsupportedSettingTypeByProvider() {
 
         DummyProvider dp2 = new DummyProvider();
         Assertions.assertThrows(
@@ -54,7 +54,7 @@ class DynamicSettingsTest {
 
 
     @Test
-    void makeSureRefreshAllCallsProviderRefreshMethodEvenWithProblem() throws InterruptedException {
+    void assertRefreshAllCallsProviderRefreshMethodEvenWithProblem() throws InterruptedException {
 
         DummyProvider dummyProvider = Mockito.mock(DummyProvider.class);
 
