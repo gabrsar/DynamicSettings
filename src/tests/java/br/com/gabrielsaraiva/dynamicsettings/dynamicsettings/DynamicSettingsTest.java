@@ -1,20 +1,17 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
 import static br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting.define;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.DynamicSettingsTest.ValidSettings.Module;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dummy.DummyProvider;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class DynamicSettingsTest {
-
-
-    DynamicSettings ds;
 
     @BeforeEach
     void before() {
@@ -25,7 +22,7 @@ class DynamicSettingsTest {
         );
 
         DummyProvider dp = new DummyProvider();
-        ds = new DynamicSettings(dp, 1, ValidSettings.class);
+        DynamicSettings ds = new DynamicSettings(dp, 1, ValidSettings.class);
 
     }
 
@@ -68,8 +65,13 @@ class DynamicSettingsTest {
 
         Thread.sleep(2000);
 
+        ds2.stop();
+
+        Thread.sleep(2000);
+
         // one at start + one per second * 2 = 3. But we may have some time coupling problems. with 2 we have tested.
         verify(dummyProvider, Mockito.atLeast(2)).loadAll();
+        verify(dummyProvider, Mockito.atMost(3)).loadAll();
 
     }
 

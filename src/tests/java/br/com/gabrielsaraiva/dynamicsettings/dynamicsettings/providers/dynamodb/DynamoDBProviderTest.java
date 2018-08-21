@@ -1,6 +1,7 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dynamodb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
@@ -42,7 +43,7 @@ public class DynamoDBProviderTest {
     @Test
     void throwsExceptionsOnAssertUnsupportedType() {
 
-        Assertions.assertThrows(
+        assertThrows(
             NotSupportedTypeException.class,
             () -> provider.assertSupportedType(invalidTypeSetting)
         );

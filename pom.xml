@@ -21,6 +21,13 @@
   <url>http://maven.apache.org</url>
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+    <dependency>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.1</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb -->
     <dependency>
       <groupId>com.amazonaws</groupId>
