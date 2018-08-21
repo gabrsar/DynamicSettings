@@ -11,9 +11,10 @@ For examples on how to use, please check this [Simple example application](https
 # Features
 - [X] Support basic types
 - [X] Support DynamoDB 
+- [X] Support Dummy Provider for Testing
 - [ ] Support collections and maps
 - [ ] Support MySql
 - [ ] Support PostgreSql
-- [ ] Full test coverage
+- [X] Full test coverage
 
 Suggestions and PullRequests are wellcome.
