@@ -9,8 +9,6 @@ public interface SettingsValueProvider {
 
     Optional<Object> getSettingValue(Setting<?> setting);
 
-    boolean accept(Class<?> type);
-
     public void assertSupportedType(Setting<?> s) throws NotSupportedTypeException;
 
 

@@ -40,7 +40,7 @@ public class DynamoDBProviderTest {
     }
 
     @Test
-    void registerWillRefuseTypesWithoutSupport() {
+    void throwsExceptionsOnAssertUnsupportedType() {
 
         Assertions.assertThrows(
             NotSupportedTypeException.class,
@@ -48,4 +48,5 @@ public class DynamoDBProviderTest {
         );
 
     }
+
 }

@@ -22,6 +22,11 @@ public class Setting<T> {
     }
 
     void setModuleName(String moduleName) {
+
+        if (this.moduleName != null) {
+            throw new RegisterSettingException("module name already defined");
+        }
+
         this.moduleName = moduleName;
     }
 
@@ -38,6 +43,9 @@ public class Setting<T> {
     }
 
     public String getModuleName() {
+        if (moduleName == null) {
+            throw new RegisterSettingException("module name was not defined yet");
+        }
         return moduleName;
     }
 

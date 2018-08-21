@@ -72,7 +72,16 @@ public class DynamicSettings {
 
     private void registerSetting(Setting<?> setting) throws NotSupportedTypeException {
         provider.assertSupportedType(setting);
-        settings.add(setting);
+
+        if (!settings.add(setting)) {
+            throw new RegisterSettingException(
+                String.format(
+                    "%s.%s already registred",
+                    setting.getModuleName(),
+                    setting.getName()
+                )
+            );
+        }
     }
 
     public void start() {

@@ -6,5 +6,9 @@ class RegisterSettingException extends RuntimeException {
         super(e);
     }
 
+    RegisterSettingException(String msg) {
+        super(msg);
+    }
+
 }
 

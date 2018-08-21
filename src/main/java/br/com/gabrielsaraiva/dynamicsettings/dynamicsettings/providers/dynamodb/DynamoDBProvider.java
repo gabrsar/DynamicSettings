@@ -64,11 +64,6 @@ public class DynamoDBProvider implements SettingsValueProvider {
             .flatMap(va -> convert(va, setting));
     }
 
-    @Override
-    public boolean accept(Class<?> clazz) {
-        return typeConverterMap.containsKey(clazz);
-    }
-
     private interface Parser<T> {
 
         T parse(AttributeValue v);
