@@ -1,6 +1,8 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings;
 
 import static br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting.define;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.DynamicSettingsTest.ValidSettings.Module;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dummy.DummyProvider;
@@ -29,14 +31,14 @@ class DynamicSettingsTest {
 
     @Test
     void assertThatSettingsAreCorrectlyRegistered() {
-        Assertions.assertEquals(Module.class.getSimpleName(), Module.stringSetting.getModuleName());
+        assertEquals(Module.class.getSimpleName(), Module.stringSetting.getModuleName());
     }
 
     @Test
     void failsIfAssignSameSettingsToSecondDynamicSettings() {
 
         DummyProvider dp2 = new DummyProvider();
-        Assertions.assertThrows(
+        assertThrows(
             RegisterSettingException.class,
             () -> new DynamicSettings(dp2, 10, ValidSettings.class)
         );
@@ -46,7 +48,7 @@ class DynamicSettingsTest {
     void failsIfRegisterUnsupportedSettingTypeByProvider() {
 
         DummyProvider dp2 = new DummyProvider();
-        Assertions.assertThrows(
+        assertThrows(
             RegisterSettingException.class,
             () -> new DynamicSettings(dp2, 10, InvalidSettings.class)
         );
@@ -67,7 +69,7 @@ class DynamicSettingsTest {
         Thread.sleep(2000);
 
         // one at start + one per second * 2 = 3. But we may have some time coupling problems. with 2 we have tested.
-        Mockito.verify(dummyProvider, Mockito.atLeast(2)).loadAll();
+        verify(dummyProvider, Mockito.atLeast(2)).loadAll();
 
     }
 
