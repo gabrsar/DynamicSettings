@@ -10,7 +10,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DynamoDBProviderTest {
@@ -27,6 +26,8 @@ public class DynamoDBProviderTest {
     private final AmazonDynamoDB dynamoDB = mock(AmazonDynamoDB.class);
     private final DynamoDBProvider provider = new DynamoDBProvider(dynamoDB, "TestTable");
 
+
+
     @Test
     void currentSupportedTypesStillWorking() throws NotSupportedTypeException {
 
@@ -39,6 +40,7 @@ public class DynamoDBProviderTest {
             provider.assertSupportedType(s);
         }
     }
+
 
     @Test
     void throwsExceptionsOnAssertUnsupportedType() {

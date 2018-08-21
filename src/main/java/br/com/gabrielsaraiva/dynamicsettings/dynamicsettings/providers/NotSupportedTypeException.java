@@ -7,11 +7,10 @@ public class NotSupportedTypeException extends Exception {
     public NotSupportedTypeException(SettingsValueProvider provider, Setting<?> s) {
         super(
             String.format(
-                "Provider=\"%s\" does not have support for type=\"%s\", used by \"%s.%s\"",
+                "Provider=\"%s\" does not have support for type=\"%s\", used by \"%s\"",
                 provider.getClass().getCanonicalName(),
                 s.getType().getCanonicalName(),
-                s.getModuleName(),
-                s.getName()
+                s.getIdentification()
             )
         );
 

@@ -70,6 +70,17 @@ public class Setting<T> {
 
     }
 
+    public String getIdentification() {
+        return String
+            .format(
+                "moduleName=%s, name=%s, fallbackValue=%s, value=%s",
+                moduleName,
+                name,
+                String.valueOf(fallBackValue),
+                String.valueOf(currentValue)
+            );
+    }
+
     @Override
     public String toString() {
         return "Setting{" +
