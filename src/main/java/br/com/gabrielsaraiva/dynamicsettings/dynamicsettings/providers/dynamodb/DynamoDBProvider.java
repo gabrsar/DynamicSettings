@@ -62,7 +62,6 @@ public class DynamoDBProvider implements SettingsValueProvider {
     }
 
     public void assertSupportedType(Setting<?> s) throws NotSupportedTypeException {
-        System.out.println("all = " + typeConverterMap);
         if (!typeConverterMap.containsKey(s.getType())) {
             throw new NotSupportedTypeException(this, s);
         }
@@ -119,8 +118,6 @@ public class DynamoDBProvider implements SettingsValueProvider {
         numbers.forEach(cp -> parserMap.put(makeSetClazz(cp.getClazz()), makeNumberSetParser(cp)));
 
         parserMap.put(makeSetClazz(new Clazz(String.class)), makeStringSetParser());
-
-        System.out.println("all = " + all);
 
         return parserMap;
 

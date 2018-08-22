@@ -27,7 +27,7 @@ public class Setting<T> {
         return new Setting<>(name, fallbackValue);
     }
 
-    public static <A> Setting<A> define(String name, A fallbackValue, Class<A> base, Class... inner) {
+    public static <A> Setting<A> define(String name, A fallbackValue, Class base, Class... inner) {
         return new Setting<>(name, fallbackValue, new Clazz(base, inner));
     }
 

@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DynamoDBProviderTest {
@@ -31,14 +32,20 @@ public class DynamoDBProviderTest {
 
 
     @Test
-    void currentSupportedTypesStillWorking() throws NotSupportedTypeException {
+    void currentSupportedTypesStillWorking() {
         assertEquals(29, provider.getSupportedTypes().size());
     }
 
 
     @Test
-    void x() throws NotSupportedTypeException {
-        provider.assertSupportedType(listString);
+    void assertThatAcceptsSupportedTypes() {
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(listString));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(stringSetting));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(integerSetting));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(floatSetting));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(doubleSetting));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(booleanSetting));
+        Assertions.assertDoesNotThrow(() -> provider.assertSupportedType(bigDecimalSetting));
     }
 
     @Test

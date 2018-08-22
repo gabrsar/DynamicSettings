@@ -4,7 +4,7 @@
   <groupId>br.com.gabrielsaraiva.dynamicsettings</groupId>
   <artifactId>dynamic-settings</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.2</version>
+  <version>0.1.4</version>
   <build>
     <plugins>
       <plugin>
