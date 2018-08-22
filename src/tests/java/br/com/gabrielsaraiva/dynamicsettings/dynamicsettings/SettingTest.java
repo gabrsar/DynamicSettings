@@ -33,7 +33,7 @@ class SettingTest {
 
     @Test
     void assertThatGetTypeReallyReturnsBirthType() {
-        assertEquals(String.class, stringSetting.getType());
+        assertEquals(new Clazz(String.class), stringSetting.getType());
     }
 
     @Test

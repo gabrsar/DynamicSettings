@@ -140,7 +140,7 @@ public class DynamicSettings {
                     "Setting '{}.{}' ({}) registered with default value='{}'",
                     setting.getModuleName(),
                     setting.getName(),
-                    setting.getType().getSimpleName(),
+                    setting.getType(),
                     setting.getFallBackValue()
                 );
             } catch (Exception e) {

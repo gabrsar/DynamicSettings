@@ -9,7 +9,7 @@ public class NotSupportedTypeException extends Exception {
             String.format(
                 "Provider=\"%s\" does not have support for type=\"%s\", used by \"%s\"",
                 provider.getClass().getCanonicalName(),
-                s.getType().getCanonicalName(),
+                s.getType(),
                 s.getIdentification()
             )
         );

@@ -1,9 +1,13 @@
 package br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.dummy;
 
+import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Clazz;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.NotSupportedTypeException;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class DummyProvider implements SettingsValueProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(DummyProvider.class);
-    private static final Class<String> supportedType = String.class;
+    private static final Clazz supportedType = new Clazz(String.class);
     private String currentRoundValue = "unitialized";
 
     public DummyProvider() {
@@ -27,9 +31,14 @@ public class DummyProvider implements SettingsValueProvider {
 
     @Override
     public void assertSupportedType(Setting<?> s) throws NotSupportedTypeException {
-        if (s.getType() != supportedType) {
+        if (!s.getType().equals(supportedType)) {
             throw new NotSupportedTypeException(this, s);
         }
+    }
+
+    @Override
+    public List<Clazz> getSupportedTypes() {
+        return Collections.singletonList(supportedType);
     }
 
     @Override

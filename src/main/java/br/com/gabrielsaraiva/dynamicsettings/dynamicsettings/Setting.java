@@ -8,18 +8,29 @@ public class Setting<T> {
     private final T fallBackValue;
     private String moduleName;
     private T currentValue;
+    private Clazz type;
 
     // Maybe check if still using a birth value?
 
     private Setting(String name, T fallbackValue) {
+        this(name, fallbackValue, new Clazz(fallbackValue.getClass()));
+    }
+
+    private Setting(String name, T fallbackValue, Clazz type) {
         this.name = name;
         this.fallBackValue = fallbackValue;
         this.currentValue = fallbackValue;
+        this.type = type;
     }
 
     public static <A> Setting<A> define(String name, A fallbackValue) {
         return new Setting<>(name, fallbackValue);
     }
+
+    public static <A> Setting<A> define(String name, A fallbackValue, Class<A> base, Class... inner) {
+        return new Setting<>(name, fallbackValue, new Clazz(base, inner));
+    }
+
 
     protected void setModuleName(String moduleName) {
 
@@ -34,8 +45,8 @@ public class Setting<T> {
         return currentValue;
     }
 
-    public Class<?> getType() {
-        return fallBackValue.getClass();
+    public Clazz getType() {
+        return type;
     }
 
     T getFallBackValue() {
