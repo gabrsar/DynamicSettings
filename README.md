@@ -59,7 +59,7 @@ System.out.println(Settings.Home.address.getValue());
 - [X] Support Dummy Provider for Testing
 - [X] Full test coverage
 - [X] JCenter
-- [  Maven Central
+- [ ] Maven Central
 - [ ] Support collections and maps
 - [ ] Extract dependencies into separated modules
 - [ ] Support for Redis
