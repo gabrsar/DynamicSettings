@@ -4,7 +4,7 @@
   <groupId>br.com.gabrielsaraiva.dynamicsettings</groupId>
   <artifactId>dynamic-settings</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.4</version>
+  <version>0.1.1</version>
   <build>
     <plugins>
       <plugin>
@@ -15,6 +15,30 @@
           <source>8</source>
           <target>8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -83,9 +107,9 @@
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>bintray-dynamicsettings-DynamicSettings</id>
-      <name>dynamicsettings-DynamicSettings</name>
-      <url>https://api.bintray.com/maven/dynamicsettings/DynamicSettings/dynamic-settings/;publish=1</url>
+      <id>bintray-gabrsar-dynamic-settings</id>
+      <name>gabrsar-dynamic-settings</name>
+      <url>https://api.bintray.com/maven/gabrsar/dynamic-settings/dynamic-settings/;publish=1</url>
     </repository>
   </distributionManagement>
 
