@@ -41,7 +41,7 @@ public class Setting<T> {
         this.moduleName = moduleName;
     }
 
-    public T getValue() {
+    T getValue() {
         return currentValue;
     }
 
@@ -81,6 +81,7 @@ public class Setting<T> {
 
     }
 
+    // TODO: This approach is not nice. Remove this method.
     public String getIdentification() {
         return String
             .format(
