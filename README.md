@@ -60,6 +60,7 @@ System.out.println(settingsReader.get(Settings.Home.address));
 - [X] Support DynamoDB 
 - [X] Support Dummy Provider for Testing
 - [X] Full test coverage
+- [X] Make it testable inside host projects
 - [X] JCenter
 - [ ] Maven Central
 - [ ] Support collections and maps
