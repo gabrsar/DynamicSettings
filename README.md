@@ -6,13 +6,60 @@ Don't make deploys to change simple settings.
 
 Simply put your settings on a database (only supports DynamoDB for now) and get it updated every minute.
 
-For examples on how to use, please check this [Simple example application](https://github.com/gabrsar/DynamicSettingsExample) [WIP]
+# How To use (Complete)
+For examples on how to use, please check this [Simple example application](https://github.com/gabrsar/DynamicSettingsExample)
+# How To Use (TL;DR)
+
+1. Add this to your pom.xml:
+```xml
+<dependencies>
+    <dependency>
+      <groupId>br.com.gabrielsaraiva.dynamicsettings</groupId>
+      <artifactId>dynamic-settings</artifactId>
+      <version>0.1.1</version>
+    </dependency>
+</dependencies>
+
+<repositories>
+  <repository>
+    <id>jcenter</id>
+    <url>https://jcenter.bintray.com/</url>
+  </repository>
+</repositories>
+```
+
+2. In DyanmoDB create a new table called `MySettings`, with index set to `module`.
+3. Add an item with module value set to `Home`
+
+5. Create a class like that
+```java
+public class Settings {
+    public static class Home {
+        public static final Setting<String> address = Setting.define("address", "This is my house");
+  }
+}
+```
+
+6. Add this in your project startup:
+```java
+DynamoDBProvider dynamodbProvider = new DynamoDBProvider("MySettings");
+DynamicSettings ds = new DynamicSettings(dynamodbProvider, 5, Settings.class);
+ds.start();
+
+System.out.println(Settings.Home.address.getValue());
+```
+7. Run it. Change your settings values in DynamoDB. Get it updated in your program.
+
+
+
 
 # Features
 - [X] Support basic types
 - [X] Support DynamoDB 
 - [X] Support Dummy Provider for Testing
 - [X] Full test coverage
+- [X] JCenter
+- [ ] Maven Central
 - [ ] Support collections and maps
 - [ ] Extract dependencies into separated modules
 - [ ] Support for Redis
