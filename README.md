@@ -16,7 +16,7 @@ For examples on how to use, please check this [Simple example application](https
     <dependency>
       <groupId>br.com.gabrielsaraiva.dynamicsettings</groupId>
       <artifactId>dynamic-settings</artifactId>
-      <version>0.1.1</version>
+      <version>0.2.0</version>
     </dependency>
 </dependencies>
 
@@ -46,7 +46,9 @@ DynamoDBProvider dynamodbProvider = new DynamoDBProvider("MySettings");
 DynamicSettings ds = new DynamicSettings(dynamodbProvider, 5, Settings.class);
 ds.start();
 
-System.out.println(Settings.Home.address.getValue());
+SettingsReader settingsReader = new SettingsReader();
+
+System.out.println(settingsReader.get(Settings.Home.address));
 ```
 7. Run it. Change your settings values in DynamoDB. Get it updated in your program.
 
