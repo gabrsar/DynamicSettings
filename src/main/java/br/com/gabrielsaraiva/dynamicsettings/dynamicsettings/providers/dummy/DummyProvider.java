@@ -19,9 +19,9 @@ public class DummyProvider implements SettingsValueProvider {
     private String currentRoundValue = "unitialized";
 
     public DummyProvider() {
-        logger.warn("+=======================================================================================+");
-        logger.warn("| YOU ARE USING DUMMY PROVIDER. IT WILL NOT GET ANY USEFUL VALUE. ITS ONLY FOR TESTING! |");
-        logger.warn("+=======================================================================================+");
+        logger.warn("+=============================================================================================+");
+        logger.warn("| YOU ARE USING DUMMY PROVIDER. IT WILL NOT GET ANY USEFUL VALUE. ITS ONLY FOR DEMONSTRATING! |");
+        logger.warn("+=============================================================================================+");
     }
 
     @Override
