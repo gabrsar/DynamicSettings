@@ -15,7 +15,7 @@ class SettingTest {
 
     @BeforeEach
     void before() {
-        stringSetting = Setting.define("address", defaultValue);
+        stringSetting = Setting.define(defaultValue);
     }
 
     @Test
@@ -38,17 +38,15 @@ class SettingTest {
 
     @Test
     void failIfNotDefineModuleNames() {
-        assertThrows(RegisterSettingException.class, () -> stringSetting.getModuleName());
+        assertThrows(RegisterSettingException.class, () -> stringSetting.getModule());
     }
 
     @Test
     void failIfDefinitionOfModuleNameTwice() {
-
-        String moduleName = "PreciousModule";
-        stringSetting.setModuleName(moduleName);
-        assertEquals(moduleName, stringSetting.getModuleName());
-
-        assertThrows(RegisterSettingException.class, () -> stringSetting.setModuleName("ShittyModule"));
+        String name = "PreciousSetting";
+        String module = "PreciousModule";
+        stringSetting.register(module, name);
+        assertThrows(RegisterSettingException.class, () -> stringSetting.register(module, name));
     }
 
 }

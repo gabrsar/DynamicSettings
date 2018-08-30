@@ -4,41 +4,37 @@ import java.util.Optional;
 
 public class Setting<T> {
 
-    private final String name;
-    private final T fallBackValue;
-    private String moduleName;
+    private boolean ready = false;
+
+    private String name;
+    private String module;
+    private T fallBackValue;
     private T currentValue;
     private Clazz type;
 
-    // Maybe check if still using a birth value?
-
-    private Setting(String name, T fallbackValue) {
-        this(name, fallbackValue, new Clazz(fallbackValue.getClass()));
-    }
-
-    private Setting(String name, T fallbackValue, Clazz type) {
-        this.name = name;
+    private Setting(T fallbackValue, Clazz type) {
         this.fallBackValue = fallbackValue;
         this.currentValue = fallbackValue;
         this.type = type;
     }
 
-    public static <A> Setting<A> define(String name, A fallbackValue) {
-        return new Setting<>(name, fallbackValue);
+    public static <A> Setting<A> define(A fallbackValue) {
+        return new Setting<>(fallbackValue, new Clazz(fallbackValue.getClass()));
     }
 
-    public static <A> Setting<A> define(String name, A fallbackValue, Class base, Class... inner) {
-        return new Setting<>(name, fallbackValue, new Clazz(base, inner));
+    public static <A> Setting<A> define(A fallbackValue, Class base, Class... inner) {
+        return new Setting<>(fallbackValue, new Clazz(base, inner));
     }
 
+    protected void register(String module, String name) {
 
-    protected void setModuleName(String moduleName) {
-
-        if (this.moduleName != null) {
+        if (ready) {
             throw new RegisterSettingException("module name already defined");
         }
 
-        this.moduleName = moduleName;
+        this.module = module;
+        this.name = name;
+        this.ready = true;
     }
 
     T getValue() {
@@ -53,17 +49,16 @@ public class Setting<T> {
         return fallBackValue;
     }
 
-    public String getModuleName() {
-        if (moduleName == null) {
+    public String getModule() {
+        if (module == null) {
             throw new RegisterSettingException("module name was not defined yet");
         }
-        return moduleName;
+        return module;
     }
 
     public String getName() {
         return name;
     }
-
 
     boolean updateValue(Optional<Object> rawNewValueOpt) {
 
@@ -85,8 +80,8 @@ public class Setting<T> {
     public String getIdentification() {
         return String
             .format(
-                "moduleName=%s, name=%s, fallbackValue=%s, value=%s",
-                moduleName,
+                "module=%s, name=%s, fallbackValue=%s, value=%s",
+                module,
                 name,
                 String.valueOf(fallBackValue),
                 String.valueOf(currentValue)
@@ -96,7 +91,7 @@ public class Setting<T> {
     @Override
     public String toString() {
         return "Setting{" +
-            "moduleName='" + moduleName + '\'' +
+            "module='" + module + '\'' +
             ", name='" + name + '\'' +
             ", fallBackValue=" + fallBackValue +
             ", value=" + currentValue +

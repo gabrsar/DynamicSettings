@@ -70,14 +70,14 @@ public class DynamicSettings {
         }
     }
 
-    private void registerSetting(Setting<?> setting) throws NotSupportedTypeException {
+    private void registerForRefresh(Setting<?> setting) throws NotSupportedTypeException {
         provider.assertSupportedType(setting);
 
         if (!settings.add(setting)) {
             throw new RegisterSettingException(
                 String.format(
                     "%s.%s already registred",
-                    setting.getModuleName(),
+                    setting.getModule(),
                     setting.getName()
                 )
             );
@@ -113,7 +113,7 @@ public class DynamicSettings {
 
         logger.debug(
             "{}.{}={} ({}), updated={}, found={}",
-            setting.getModuleName(),
+            setting.getModule(),
             setting.getName(),
             setting.getValue(),
             setting.getFallBackValue(),
@@ -133,12 +133,12 @@ public class DynamicSettings {
             try {
                 Setting<?> setting = (Setting<?>) field.get(Setting.class);
 
-                setting.setModuleName(moduleName);
+                setting.register(moduleName, field.getName());
 
-                registerSetting(setting);
+                registerForRefresh(setting);
                 logger.debug(
                     "Setting '{}.{}' ({}) registered with default value='{}'",
-                    setting.getModuleName(),
+                    setting.getModule(),
                     setting.getName(),
                     setting.getType(),
                     setting.getFallBackValue()
@@ -146,7 +146,6 @@ public class DynamicSettings {
             } catch (Exception e) {
                 throw new RegisterSettingException(e);
             }
-
         }
     }
 }

@@ -16,19 +16,18 @@ class DynamicSettingsTest {
     @BeforeEach
     void before() {
 
-        Module.stringSetting = define(
-            "importantString",
-            "Settingszinho"
-        );
+        Module.stringSetting = define("importantString");
 
         DummyProvider dp = new DummyProvider();
+
+        // Required only to register those settings.
         DynamicSettings ds = new DynamicSettings(dp, 1, ValidSettings.class);
 
     }
 
     @Test
     void assertThatSettingsAreCorrectlyRegistered() {
-        assertEquals(Module.class.getSimpleName(), Module.stringSetting.getModuleName());
+        assertEquals(Module.class.getSimpleName(), Module.stringSetting.getModule());
     }
 
     @Test
@@ -79,10 +78,7 @@ class DynamicSettingsTest {
 
         public static class Module {
 
-            public static Setting<String> stringSetting = define(
-                "suggestedNameForThisProject",
-                "7*(15.toSoMuchLowerCase())"
-            );
+            public static Setting<String> anotherNameForThisProject = define("7*(15.toSoMuchLowerCase())");
         }
     }
 
@@ -99,7 +95,7 @@ class DynamicSettingsTest {
 
         public static class InvalidModule {
 
-            public static Setting<Double> doubleSetting = define("pi", 3.14);
+            public static Setting<Double> pi = define(3.14);
         }
     }
 

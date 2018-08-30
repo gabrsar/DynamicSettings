@@ -5,6 +5,23 @@ import java.util.Objects;
 
 public class Clazz {
 
+    /**
+     * Due Java type erasure, it's necessary to do a few tricky things to keep all information required to parse data
+     * back.
+     *
+     * As type of something isn't known at runtime, its necessary to keep it as a meta information.
+     * Its done in this way:
+     *
+     * A Clazz represent full type information of some item:
+     *
+     * For example:
+     *  - To represent a List<String> it's used an object Clazz(List.class,String.class)
+     *  - To represent a Map<String,Integer> the object is Clazz(Map.class,String.class,Integer.class)
+     *  - To represent a Map<String,List<Integer>> the object is
+     *     Clazz(Map.class,String.class,Clazz(List.class, String.class))
+     *
+     */
+
     private final Class<?> baseClass;
 
     private final Class<?>[] types;
