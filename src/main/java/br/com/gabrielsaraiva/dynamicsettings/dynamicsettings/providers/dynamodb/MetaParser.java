@@ -28,11 +28,11 @@ class MetaParser {
         this.parser = parser;
     }
 
-    Clazz getClazz() {
+    protected Clazz getClazz() {
         return clazz;
     }
 
-    Parser getParser() {
+    protected Parser getParser() {
         return parser;
     }
 }

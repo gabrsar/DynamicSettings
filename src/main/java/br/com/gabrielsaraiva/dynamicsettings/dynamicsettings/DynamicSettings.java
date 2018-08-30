@@ -91,12 +91,12 @@ public class DynamicSettings {
         }
 
         if (initialized) {
-            throw new RegisterSettingException("already stated.");
+            throw new RegisterSettingException("already started.");
         }
 
         refreshAll();
 
-        logger.debug("starting with {} settings registred", settings.size());
+        logger.debug("starting with {} settings registered", settings.size());
         initialized = true;
         refresher.scheduleWithFixedDelay(this::refreshAll, refreshIntervalInSeconds, refreshIntervalInSeconds, SECONDS);
     }
