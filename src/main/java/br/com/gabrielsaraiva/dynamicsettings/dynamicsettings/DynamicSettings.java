@@ -20,10 +20,10 @@ public class DynamicSettings {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicSettings.class);
 
-    private static boolean settingsRegistered = false;
-    private static boolean initialized = false;
+    private boolean settingsRegistered = false;
+    private boolean initialized = false;
 
-    private static final Set<Setting<?>> settings = new HashSet<>();
+    private final Set<Setting<?>> settings = new HashSet<>();
 
     private final ScheduledExecutorService refresher;
     private final int refreshIntervalInSeconds;
@@ -70,14 +70,14 @@ public class DynamicSettings {
         }
     }
 
-    private void registerSetting(Setting<?> setting) throws NotSupportedTypeException {
+    private void registerForRefresh(Setting<?> setting) throws NotSupportedTypeException {
         provider.assertSupportedType(setting);
 
         if (!settings.add(setting)) {
             throw new RegisterSettingException(
                 String.format(
                     "%s.%s already registred",
-                    setting.getModuleName(),
+                    setting.getModule(),
                     setting.getName()
                 )
             );
@@ -91,12 +91,12 @@ public class DynamicSettings {
         }
 
         if (initialized) {
-            throw new RegisterSettingException("already stated.");
+            throw new RegisterSettingException("already started.");
         }
 
         refreshAll();
 
-        logger.debug("starting with {} settings registred", settings.size());
+        logger.debug("starting with {} settings registered", settings.size());
         initialized = true;
         refresher.scheduleWithFixedDelay(this::refreshAll, refreshIntervalInSeconds, refreshIntervalInSeconds, SECONDS);
     }
@@ -113,7 +113,7 @@ public class DynamicSettings {
 
         logger.debug(
             "{}.{}={} ({}), updated={}, found={}",
-            setting.getModuleName(),
+            setting.getModule(),
             setting.getName(),
             setting.getValue(),
             setting.getFallBackValue(),
@@ -133,12 +133,12 @@ public class DynamicSettings {
             try {
                 Setting<?> setting = (Setting<?>) field.get(Setting.class);
 
-                setting.setModuleName(moduleName);
+                setting.register(moduleName, field.getName());
 
-                registerSetting(setting);
+                registerForRefresh(setting);
                 logger.debug(
                     "Setting '{}.{}' ({}) registered with default value='{}'",
-                    setting.getModuleName(),
+                    setting.getModule(),
                     setting.getName(),
                     setting.getType(),
                     setting.getFallBackValue()
@@ -146,7 +146,6 @@ public class DynamicSettings {
             } catch (Exception e) {
                 throw new RegisterSettingException(e);
             }
-
         }
     }
 }

@@ -4,7 +4,6 @@ import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Clazz;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.Setting;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.NotSupportedTypeException;
 import br.com.gabrielsaraiva.dynamicsettings.dynamicsettings.providers.SettingsValueProvider;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +45,7 @@ public class DummyProvider implements SettingsValueProvider {
 
         String newValue = String.format(
             "%s.%s-%s",
-            setting.getModuleName(),
+            setting.getModule(),
             setting.getName(),
             currentRoundValue
         );

@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -72,7 +71,7 @@ public class DynamoDBProvider implements SettingsValueProvider {
     public Optional<Object> getSettingValue(Setting<?> setting) {
 
         return Optional
-            .ofNullable(modulesDataByModulesName.get(setting.getModuleName()))
+            .ofNullable(modulesDataByModulesName.get(setting.getModule()))
             .map(module -> module.get(setting.getName()))
             .flatMap(va -> convert(va, setting));
     }
@@ -84,44 +83,61 @@ public class DynamoDBProvider implements SettingsValueProvider {
 
     private static Map<Clazz, Parser> getParserMap() {
 
+        /* Here is generated a list of MetaParser for all supported types,
+         * from simple ones (String, Integer, ...) to complex ones like
+         * (List of Strings, Map of List of Strings, ...)
+         */
+
+        List<MetaParser> numbers = Arrays.asList(
+            new MetaParser(Integer.class, v -> Integer.parseInt(v.getN())),
+            new MetaParser(Float.class, v -> Float.parseFloat(v.getN())),
+            new MetaParser(Double.class, v -> Double.parseDouble(v.getN())),
+            new MetaParser(BigDecimal.class, v -> new BigDecimal(v.getN()))
+        );
+
+        List<MetaParser> stringBased = Arrays.asList(
+            new MetaParser(String.class, AttributeValue::getS),
+            new MetaParser(DateTime.class, v -> new DateTime(v.getS())),
+            new MetaParser(Date.class, v -> new DateTime(v.getS()).toDate())
+        );
+
+        List<MetaParser> others = Collections.singletonList(
+            new MetaParser(Boolean.class, AttributeValue::getBOOL)
+        );
+
+        List<MetaParser> allMetaParsers = new ArrayList<>();
+        allMetaParsers.addAll(numbers);
+        allMetaParsers.addAll(stringBased);
+        allMetaParsers.addAll(others);
+
+        /* Now with MetaParsers for all supported types
+         * it's created the map of Parsers that will effectively do the parsing from Dynamo.
+         */
+
         Map<Clazz, Parser> parserMap = new HashMap<>();
 
-        List<ClazzParser> numbers = Arrays.asList(
-            new ClazzParser(Integer.class, v -> Integer.parseInt(v.getN())),
-            new ClazzParser(Float.class, v -> Float.parseFloat(v.getN())),
-            new ClazzParser(Double.class, v -> Double.parseDouble(v.getN())),
-            new ClazzParser(BigDecimal.class, v -> new BigDecimal(v.getN()))
-        );
-
-        List<ClazzParser> stringBased = Arrays.asList(
-            new ClazzParser(String.class, AttributeValue::getS),
-            new ClazzParser(DateTime.class, v -> new DateTime(v.getS())),
-            new ClazzParser(Date.class, v -> new DateTime(v.getS()).toDate())
-        );
-
-        List<ClazzParser> others = Collections.singletonList(
-            // TODO Implement byte buffer
-            new ClazzParser(Boolean.class, AttributeValue::getBOOL)
-        );
-
-        List<ClazzParser> all = new ArrayList<>();
-        all.addAll(numbers);
-        all.addAll(stringBased);
-        all.addAll(others);
-
-        all.forEach(cp -> {
-            parserMap.put(cp.getClazz(), cp.getParser());
-            parserMap.put(makeMapClazz(cp.getClazz()), DynamoDBProvider.makeMapParser(cp));
-            parserMap.put(makeListClazz(cp.getClazz()), DynamoDBProvider.makeListParser(cp));
+        allMetaParsers.forEach(meta -> {
+            parserMap.put(meta.getClazz(), meta.getParser());
+            parserMap.put(makeMapClazz(meta.getClazz()), makeMapParser(meta.getParser()));
+            parserMap.put(makeListClazz(meta.getClazz()), makeListParser(meta.getParser()));
         });
 
-        numbers.forEach(cp -> parserMap.put(makeSetClazz(cp.getClazz()), makeNumberSetParser(cp)));
+        // Only supports Sets of String, Numbers and Binary (not implemented yet)
+        // But with that, all string based types are supported.
+        stringBased.forEach(meta ->
+            parserMap.put(makeSetClazz(meta.getClazz()), makeStringSetParser(meta.getParser()))
+        );
 
-        parserMap.put(makeSetClazz(new Clazz(String.class)), makeStringSetParser());
+        numbers.forEach(meta ->
+            parserMap.put(makeSetClazz(meta.getClazz()), makeNumberSetParser(meta.getParser()))
+        );
 
+        // Basic classes, List, Maps, and Sets parsers
         return parserMap;
 
     }
+
+    // Here are support methods to make meta assembly easier
 
     private static Clazz makeMapClazz(Clazz clazz) {
         return new Clazz(Map.class, String.class, clazz.getBaseClass());
@@ -135,27 +151,24 @@ public class DynamoDBProvider implements SettingsValueProvider {
         return new Clazz(List.class, clazz.getBaseClass());
     }
 
-    private static Parser makeStringSetParser() {
-        return (p) -> new HashSet<>(p.getSS());
+    private static Parser makeStringSetParser(Parser parser) {
+        return (av) -> (Set) av.getSS().stream().map(AttributeValue::new).map(parser::parse);
     }
 
-    private static Parser makeNumberSetParser(ClazzParser cp) {
-        return (p) -> (Set) p.getNS().stream().map(v -> cp.getParser().parse(new AttributeValue(v)));
+    private static Parser makeNumberSetParser(Parser parser) {
+        return (av) -> (Set) (av.getNS().stream().map(AttributeValue::new).map(parser::parse));
     }
 
-
-    private static Parser makeListParser(ClazzParser cp) {
-        return (p) -> (ArrayList) p.getL().stream()
-            .map(v -> cp.getParser().parse(v))
-            .collect(Collectors.toList());
+    private static Parser makeListParser(Parser parser) {
+        return (av) -> (ArrayList) av.getL().stream().map(parser::parse).collect(Collectors.toList());
     }
 
-    private static Parser makeMapParser(ClazzParser cp) {
-        return (p) -> (HashMap) p.getM()
+    private static Parser makeMapParser(Parser parser) {
+        return (av) -> (HashMap) av.getM()
             .entrySet()
             .stream()
             .collect(
-                Collectors.toMap(Entry::getKey, entry -> cp.getParser().parse(entry.getValue()))
+                Collectors.toMap(Entry::getKey, entry -> parser.parse(entry.getValue()))
             );
     }
 
