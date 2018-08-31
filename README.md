@@ -70,5 +70,5 @@ System.out.println(settingsReader.get(Settings.Home.address));
 - [ ] Support PostgreSql
 - [ ] Support for MongoDB
 
-
+- Test Travis CI
 Suggestions and PullRequests are wellcome.
