@@ -20,10 +20,10 @@ public class DynamicSettings {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicSettings.class);
 
-    private static boolean settingsRegistered = false;
-    private static boolean initialized = false;
+    private boolean settingsRegistered = false;
+    private boolean initialized = false;
 
-    private static final Set<Setting<?>> settings = new HashSet<>();
+    private final Set<Setting<?>> settings = new HashSet<>();
 
     private final ScheduledExecutorService refresher;
     private final int refreshIntervalInSeconds;
