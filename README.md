@@ -16,7 +16,7 @@ For examples on how to use, please check this [Simple example application](https
     <dependency>
       <groupId>br.com.gabrielsaraiva.dynamicsettings</groupId>
       <artifactId>dynamic-settings</artifactId>
-      <version>0.2.0</version>
+      <version>0.3.0</version>
     </dependency>
 </dependencies>
 
@@ -35,7 +35,7 @@ For examples on how to use, please check this [Simple example application](https
 ```java
 public class Settings {
     public static class Home {
-        public static final Setting<String> address = Setting.define("address", "This is my house");
+        public static final Setting<String> address = Setting.define("This is my house");
   }
 }
 ```
@@ -63,7 +63,7 @@ System.out.println(settingsReader.get(Settings.Home.address));
 - [X] Make it testable inside host projects
 - [X] JCenter
 - [ ] Maven Central
-- [ ] Support collections and maps
+- [X] Support collections and maps
 - [ ] Extract dependencies into separated modules
 - [ ] Support for Redis
 - [ ] Support MySql
